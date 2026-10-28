@@ -1,5 +1,4 @@
 const db = require('../db');
-
 // Listar todos os veículos
 exports.getVehicles = (req, res) => {
   try {

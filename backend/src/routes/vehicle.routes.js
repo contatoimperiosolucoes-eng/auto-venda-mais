@@ -1,19 +1,16 @@
 const express = require('express');
 const router = express.Router();
 const vehicleController = require('../controllers/vehicle.controller');
+const { authMiddleware, authorizeRoles } = require('../middlewares/auth.middleware');
 
-// Listagem e busca por ID
+// Rotas públicas (qualquer visitante consulta anúncios)
 router.get('/', vehicleController.getVehicles);
 router.get('/:id', vehicleController.getVehicleById);
 
-// Criação
-router.post('/', vehicleController.createVehicle);
-
-// Atualização (PUT e PATCH)
-router.put('/:id', vehicleController.updateVehicle);
-router.patch('/:id', vehicleController.updateVehicle);
-
-// Remoção
-router.delete('/:id', vehicleController.deleteVehicle);
+// Rotas protegidas (apenas 'vendedor' ou 'admin')
+router.post('/', authMiddleware, authorizeRoles('vendedor', 'admin'), vehicleController.createVehicle);
+router.put('/:id', authMiddleware, authorizeRoles('vendedor', 'admin'), vehicleController.updateVehicle);
+router.patch('/:id', authMiddleware, authorizeRoles('vendedor', 'admin'), vehicleController.updateVehicle);
+router.delete('/:id', authMiddleware, authorizeRoles('vendedor', 'admin'), vehicleController.deleteVehicle);
 
 module.exports = router;
