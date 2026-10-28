@@ -14,7 +14,7 @@ import CreateVehicleAd from './CreateVehicleAd';
 import MyAdsModal from './MyAdsModal';
 import { getFipeComparison } from './fipeService';
 
-const API_BASE = 'http://localhost:3000/api';
+const API_BASE = import.meta.env.VITE_API_BASE_URL || 'https://auto-venda-mais.onrender.com/api';
 const DEFAULT_CAR_IMAGE = 'https://images.unsplash.com/photo-1549399542-7e3f8b79c341?auto=format&fit=crop&w=800&q=80';
 
 const SAMPLE_VEHICLES = [
